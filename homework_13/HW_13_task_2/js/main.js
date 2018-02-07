@@ -29,18 +29,21 @@ function getNameById (count) {
         case 3:
             answer = "Бумага";
             break;
+        default:
+        console.log("Error" + count);
     }
     return answer;
 }
 // функция для определения победителя
 function determineWinner (one, two) {
     var battle;
-    if ((one === 3 && two === 1) || (one === 2 && two === 3) || (one === 1 && two === 2)) {
-        battle = 1;
-    } else if ((one === 1 && two === 3) || (one === 3 && two === 2) || (one === 2 && two === 1)) {
-        battle = 2;
-    } else {
+    
+    if (one === two) {
         battle = "Draw";
+    } else if ((one === 3 && two === 1) || (one === 2 && two === 3) || (one === 1 && two === 2)) {
+        battle = 1;
+    } else {
+        battle = 2;
     };
     return battle;
 }
@@ -48,13 +51,13 @@ function determineWinner (one, two) {
 function printResult (score) {
     var massege = "";
     if (score === 1) {
-        massege = firstMsg + score;
+        massege = "Первый";
     } else if (score === 2) {
-        massege = secondMsg + score;
+        massege = "Второй";
     } else {
-        massege = "Whatever";
+        massege = "Ничья";
     }
-    return element.innerHTML = massege;
+    return element.innerHTML = `Выиграл ${massege} игрок`;
 
 }
 // главная функция
@@ -64,6 +67,8 @@ function runGame() {
     
     player1.innerHTML = getNameById(gamerOne);
     player2.innerHTML = getNameById(gamerTwo);
+
+    printResult(determineWinner(gamerOne, gamerTwo));
 }
 
 btn.addEventListener("click", runGame);
