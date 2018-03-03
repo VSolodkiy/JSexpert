@@ -17,13 +17,14 @@ function getDate(date) {
 }
 // С помощью функции splice необходимо вырезать 6-й элемент массива.
 function cutItemFromArray(arr, index) {
-    return arr.splice(index, 1);
+    arr.splice(index, 1);
 }
 /* Используйте функцию forEach. Внутри цикла создайте новый массив объектов.
 В процессе создания нового массива объектов, избавьтесь от ключа id.*/
-function getNewDataObj(array, param) {
-        array.forEach(item => {
-            param.push({
+function getNewDataObj(data) {
+    let arr = [];
+        data.forEach(item => {
+            arr.push({
                 name: item.name,
                 url:  item.url,
                 description: item.description,
@@ -31,7 +32,7 @@ function getNewDataObj(array, param) {
                 params: item.params
         });
     });
-    return param;
+    return arr;
 }
 // пройдитесь методом map() 
 function transformNewData(param) {
@@ -58,16 +59,14 @@ function printResult (print) {
     console.log(print);
 }
 function transform () {
-    let newData = [],
-        newDataTranform = [], // работа над ошибками
-        newDataFiltered = []; 
-    cutItemFromArray(data, 5);
-    getNewDataObj(data, newData);
+    let newData = [...data];
+    cutItemFromArray(newData, 5);
+    newData = getNewDataObj(newData);
+    newData = transformNewData(newData);
+    newData = getFilteredData(newData);
+    printResult(newData);
+    // printResult(getFilteredData(transformNewData(getNewDataObj(newData)))); //можно еще и так
 
-    newDataTranform = transformNewData(newData);
-    newDataFiltered = getFilteredData(newDataTranform);
-
-    printResult(newDataFiltered);
 }
 
 btn.addEventListener("click", transform);
