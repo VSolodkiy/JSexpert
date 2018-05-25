@@ -1,20 +1,35 @@
 'use strict';
 moment.locale('ru');
+let message = "";
 // переменная, до которой даты вести отсчет
 let restOfDays = moment([2019, 0, 1]);
+let getDays = restOfDays.diff(moment(), 'days');
 // функция даты и отсчета количества оставшихся дней
 function date() {
     let elementOne = document.getElementById('date');
     elementOne.innerHTML = `Сегодня: <span>${moment().format(`DD MMMM YYYY`)} года</span>`;
 
     let elementThree = document.getElementById('rest');
-    elementThree.innerHTML = `До 2019 года осталось: <span>${restOfDays.diff(moment(), 'days')} дня</span>`;
+    elementThree.innerHTML = `До 2019 года осталось: <span>${getDays} ${declension(getDays)}</span>`;
 }
 // функция часов
 function clock() {
     let elementTwo = document.getElementById('digital');
     elementTwo.innerHTML = `Текущее время: <span>${moment().format("HH:mm:ss")}</span>`;
-    console.log(elementTwo.innerHTML);
+}
+// Функция склонения слова "День"
+function declension (n) {
+    let numberToStr = "" + n;
+    let getResNumber = parseInt(numberToStr.substr(numberToStr.length-1));
+
+    if (getResNumber == 1) {
+        message = " день";
+    } else if (getResNumber == 2 || getResNumber == 3 || getResNumber == 4) {
+        message = " дня";
+    } else { 
+        message = " дней";
+    }
+    return message;
 }
 // функция запуска часов
 function clockStart() {
@@ -25,20 +40,6 @@ function clockStart() {
 clockStart();
 date();
 
-// let message = "";
-// let whatever = restOfDays.diff(moment(), 'days');
-// function raven (n) {
-//     let MsgOne = "дня",
-//         MsgTwo = "дней",
-//         MsgThree = "день";
-
-//     if (n % 2 === 0) {
-//         message = MsgOne;
-//     } else if (n % 1 === 0) {
-//         message = MsgTwo;
-//     } else {
-//         message = MsgThree;
-//     }
-//     return message;
+// if (getResNumber > 4 && getResNumber < 21) {
+//     message = " дней"; 
 // }
-// console.log(`Осталось ${whatever} ${raven(whatever)}`);
